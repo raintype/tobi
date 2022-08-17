@@ -5,8 +5,14 @@ package user;
 import java.sql.*;
 
 public class UserDao {
+    private ConnectionMaker connectionMaker;
+
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeConnection();
 
         PreparedStatement ps = c.prepareStatement(
             "insert into users(id, name, password) values(?,?,?)"
@@ -22,7 +28,7 @@ public class UserDao {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeConnection();
 
         PreparedStatement ps = c.prepareStatement(
              "select * from users where id = ?"
@@ -43,31 +49,10 @@ public class UserDao {
          return user;
     }
 
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook?characterEncoding=latin1", "test", "test");
-
-        return c;
-    }
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        UserDao dao = new UserDao();
 
-        User user = new User();
-        user.setId("whiteship4");
-        user.setName("???");
-        user.setPassword("married");
 
-        dao.add(user);
 
-        System.out.println(user.getId() + " ?? ??");
-
-         User user2 = dao.get(user.getId());
-         System.out.println(user2.getName());
-
-         System.out.println(user2.getPassword());
-
-         System.out.println(user2.getId() + " ?? ??");
 
     }
 }
