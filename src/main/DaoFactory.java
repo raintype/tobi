@@ -1,5 +1,8 @@
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DaoFactory {
@@ -7,12 +10,19 @@ public class DaoFactory {
     public UserDao userDao() {
 //        return new UserDao(connectionMaker());
         UserDao userDao = new UserDao();
-        userDao.setConnectionMaker(connectionMaker());
+        userDao.setDataSource(dataSource());
         return userDao;
     }
 
     @Bean
-    public ConnectionMaker connectionMaker() {
-        return new DConnectionMaker();
+    public DataSource dataSource() {
+        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+
+        dataSource.setDriverClass(com.mysql.jdbc.Driver.class);
+        dataSource.setUrl("jdbc:mysql://localhost/springbook");
+        dataSource.setUsername("test");
+        dataSource.setPassword("test");
+
+        return dataSource;
     }
 }

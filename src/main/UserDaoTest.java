@@ -13,22 +13,21 @@ public class UserDaoTest {
 
 
 
-
         User user = new User();
-        user.setId("raintype05");
+        user.setId("ID01");
         user.setName("raintype");
         user.setPassword("married");
 
         dao.add(user);
 
-        System.out.println(user.getId() + " ?? ??");
+        System.out.println("ID : " + user.getId());
 
         User user2 = dao.get(user.getId());
-        System.out.println(user2.getName());
+        System.out.println("Name : " + user2.getName());
 
-        System.out.println(user2.getPassword());
+        System.out.println("Password : " + user2.getPassword());
 
-        System.out.println(user2.getId() + " ?? ??");
+        System.out.println("ID : " + user2.getId());
 
 
     }

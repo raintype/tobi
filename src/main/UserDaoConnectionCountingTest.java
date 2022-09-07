@@ -10,7 +10,7 @@ public class UserDaoConnectionCountingTest {
 
 
         User user = new User();
-        user.setId("raintype03");
+        user.setId("raintype05");
         user.setName("raintype");
         user.setPassword("married");
 
